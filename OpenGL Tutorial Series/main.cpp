@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "Shader.h"
 #include "Mesh.h"
+#include "Texture.h"
 
 
 int main(int argc, char** argv)
@@ -11,18 +12,22 @@ int main(int argc, char** argv)
 
 	Shader shader("./resources/shaders/basicShader");
 
-	Vertex vertices[] = { Vertex(glm::fvec3(-0.5, -0.5, 0)),
-						  Vertex(glm::fvec3( 0.5, -0.5, 0)),
-						  Vertex(glm::fvec3( 0.0,  0.5, 0))};
+	Vertex vertices[] = { Vertex(glm::vec3(-0.5, -0.5, 0), glm::vec2(0, 0) ),
+						  Vertex(glm::vec3( 0.5, -0.5, 0), glm::vec2(1, 0) ),
+						  Vertex(glm::vec3( 0.0,  0.5, 0), glm::vec2(0.5, 1) )};
 
 	Mesh mesh(vertices, sizeof(vertices)/sizeof(vertices[0]));
-		
+	
+	Texture texture("./resources/textures/bricks.jpg");
+
 	while(!renderer.IsClosed())
 	{
 		renderer.Clear(0.0f, 0.15f, 0.3f, 1.0f);
 
 		shader.Bind();
 
+		texture.Bind(0);
+		
 		mesh.Draw();
 
 		renderer.Update();
