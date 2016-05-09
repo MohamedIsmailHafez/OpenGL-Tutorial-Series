@@ -20,9 +20,13 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices)
 		texCoords.push_back(*vertices[i].GetTexCoord());
 	}
 
-	//Vertices
+	//Generate Buffers.
 	//================================================================================================
 	glGenBuffers(NUM_BUFFERS, mVertexArrayBuffers);
+	//================================================================================================
+
+	//Vertices
+	//================================================================================================
 	glBindBuffer(GL_ARRAY_BUFFER, mVertexArrayBuffers[POSITION_VB]);
 	glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(positions[0]), &positions[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
@@ -31,7 +35,6 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices)
 
 	//Texture Coordinates
 	//================================================================================================
-	glGenBuffers(NUM_BUFFERS, mVertexArrayBuffers);
 	glBindBuffer(GL_ARRAY_BUFFER, mVertexArrayBuffers[TEXCOORD_VB]);
 	glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(texCoords[0]), &texCoords[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(1);
@@ -45,6 +48,8 @@ Mesh::Mesh(Vertex* vertices, unsigned int numVertices)
 Mesh::~Mesh()
 {
 	glDeleteVertexArrays(1, &mVertexArrayObject);
+
+	glDeleteBuffers(NUM_BUFFERS, mVertexArrayBuffers);
 }
 
 void Mesh::Draw()
