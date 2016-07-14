@@ -23,6 +23,7 @@ Shader::Shader(const std::string& fileName)
 	glValidateProgram(mProgram);
 	CheckShaderError(mProgram, GL_VALIDATE_STATUS ,true, "Error: Shader Program is invalid: ");
 
+	mUniforms[TRANSFORM_U] = glGetUniformLocation(mProgram, "transform");
 }
 
 void Shader::Bind()
@@ -106,4 +107,11 @@ GLuint Shader::CreateShader(const std::string& source, unsigned int shaderType)
 	CheckShaderError(shader, GL_COMPILE_STATUS, false, "Error: Shader compilation failed: ");
 
 	return shader;
+}
+
+void Shader::Update(const Transform& transform)
+{
+	glm::mat4 modelMatrix = transform.GetModel();
+
+	glUniformMatrix4fv(mUniforms[TRANSFORM_U], 1, GL_FALSE, &modelMatrix[0][0]);
 }

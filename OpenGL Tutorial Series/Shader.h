@@ -3,6 +3,7 @@
 
 #include <string>
 #include "GL/glew.h"
+#include "Transform.h"
 
 class Shader
 {
@@ -10,6 +11,8 @@ public:
 	explicit Shader(const std::string& fileName);
 
 	void Bind();
+
+	void Update(const Transform& transform);
 
 	virtual ~Shader();
 
@@ -30,10 +33,17 @@ private:
 
 	GLuint CreateShader(const std::string& source, unsigned int shaderType);
 
-
 	static const unsigned int NUM_SHADERS = 2;	//Currently supporting Vertex & Fragment Shaders.
+
+	enum
+	{
+		TRANSFORM_U,
+
+		NUM_UNIFORMS
+	};
 
 	GLuint mProgram;
 	GLuint mShaders[NUM_SHADERS];
+	GLuint mUniforms[NUM_UNIFORMS];
 };
 #endif // SHADER_H
