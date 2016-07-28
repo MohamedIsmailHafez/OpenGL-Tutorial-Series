@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 
 		texture.Bind(0);
 
-		shader.Update(transform);
+		shader.Update();
 
 		mesh.Draw();
 

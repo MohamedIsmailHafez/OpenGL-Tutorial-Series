@@ -12,7 +12,7 @@ public:
 
 	void Bind();
 
-	void Update(const Transform& transform);
+	void Update(const Transform& transform = Transform());
 
 	virtual ~Shader();
 
